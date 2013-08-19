@@ -15,7 +15,7 @@ TFLEnhancedModel = require('app/base/Class').extend({
     version: {
         major: 2,
         minor: 2,
-        patch: 0
+        patch: 1
     },
     toString: function() { return TFLEnhanced.version.major + '.' + TFLEnhanced.version.minor + '.' + TFLEnhanced.version.patch},
     init: function(){
@@ -276,8 +276,8 @@ initPopout : function(){
         }
         if (data.fromID == '5194c32d96fba57f21243cc4')
         {
-            $('.chat-manager').attr('style','background-image:url(http://i.imgur.com/hPQ6ghY.png);');
-            $('.chat-manager').css('color','#AB00FF');
+            $('.chat-id-'+ data.chatID).attr('style','background-image:url(http://i.imgur.com/hPQ6ghY.png);');
+            $('.chat-id-'+ data.chatID).css('color','#AB00FF');
         }
         if (data.fromID === API.getUser().id && this.socket.readyState === SockJS.OPEN)
         this.socket.send(JSON.stringify({type:"chat",msg:data.message,chatID:data.chatID,username:data.from,ID:data.fromID,room:window.location.pathname.split('/')[1]}));
