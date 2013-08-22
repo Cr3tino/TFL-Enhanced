@@ -279,6 +279,10 @@ initPopout : function(){
             $('.chat-id-'+ data.chatID).attr('style','background-image:url(http://i.imgur.com/hPQ6ghY.png);');
             $('.chat-id-'+ data.chatID).css('color','#AB00FF');
         }
+         if (data.fromID == '5112c273d6e4a94ec0554792')
+        {
+            $('.chat-id-'+ data.chatID).attr('style','background-image:url(http://i.imgur.com/Vrvd0h6.png);');
+        }
         if (data.fromID === API.getUser().id && this.socket.readyState === SockJS.OPEN)
         this.socket.send(JSON.stringify({type:"chat",msg:data.message,chatID:data.chatID,username:data.from,ID:data.fromID,room:window.location.pathname.split('/')[1]}));
     },
