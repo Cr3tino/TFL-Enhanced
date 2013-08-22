@@ -281,7 +281,7 @@ initPopout : function(){
         }
          if (data.fromID == '5112c273d6e4a94ec0554792')
         {
-            $('.chat-id-'+ data.chatID).attr('style','background-image:url(http://i.imgur.com/FsyHdhF.png);');
+            $('.chat-id-'+ data.chatID).attr('style','background-image:url(http://i.imgur.com/VQiQJgm.png);');
         }
         if (data.fromID === API.getUser().id && this.socket.readyState === SockJS.OPEN)
         this.socket.send(JSON.stringify({type:"chat",msg:data.message,chatID:data.chatID,username:data.from,ID:data.fromID,room:window.location.pathname.split('/')[1]}));
