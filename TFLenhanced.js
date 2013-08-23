@@ -15,7 +15,7 @@ TFLEnhancedModel = require('app/base/Class').extend({
     version: {
         major: 2,
         minor: 2,
-        patch: 1
+        patch: 2
     },
     toString: function() { return TFLEnhanced.version.major + '.' + TFLEnhanced.version.minor + '.' + TFLEnhanced.version.patch},
     init: function(){
@@ -155,7 +155,7 @@ TFLEnhancedModel = require('app/base/Class').extend({
     initCSS: function() {
         $('#room-wheel').css('background','url("https://github.com/Colgate/TFL-Enhanced/raw/master/extras/TFL.gif")');
         $('#room-wheel').css('background-repeat','no-repeat');
-        $('#room-wheel').css('background-position','500px 275px');
+        $('#room-wheel').css('background-position','500px 235px');
         $('#meta-frame .frame-background').hide('.frame-background');
         $('#button-dj-waitlist-join').attr('style','background-image:url(http://i.imgur.com/SqU01C6.png); display: block;');
         $('#button-dj-waitlist-leave').attr('style','background-image:url(http://i.imgur.com/i4YkTFC.png); display: block;');
@@ -170,6 +170,7 @@ TFLEnhancedModel = require('app/base/Class').extend({
             $('head').append('<link href="http://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet" type="text/css">'
             + '<style type="text/css" id="TFL-css">'
             + 'html{background: url("http://i.imgur.com/NtKtM5t.png") no-repeat scroll center top #000000;}'
+            + '#room-wheel {position:absolute;top:50px;}'
             + '#button-lobby { background-image: url("http://i.imgur.com/GjbQ4IK.png");}'
             + 'body {color:#66FFFF;}'
             + '#current-dj-value {color:#66FFFF;}'
