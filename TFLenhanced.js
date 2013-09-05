@@ -15,7 +15,7 @@ TFLEnhancedModel = require('app/base/Class').extend({
     version: {
         major: 2,
         minor: 2,
-        patch: 2
+        patch: 3
     },
     toString: function() { return TFLEnhanced.version.major + '.' + TFLEnhanced.version.minor + '.' + TFLEnhanced.version.patch},
     init: function(){
@@ -348,7 +348,7 @@ initPopout : function(){
     },
 
     Socket: function(){
-        this.socket = new SockJS('http://thedark1337.asuscomm.com:984/echo');
+        this.socket = new SockJS('http://music.thedark1337.com:984/echo');
         this.socket.tries = 0;
 
         this.socket.onopen =  function() {
