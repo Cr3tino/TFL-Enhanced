@@ -15,7 +15,7 @@ TFLEnhancedModel = require('app/base/Class').extend({
     version: {
         major: 2,
         minor: 2,
-        patch: 3
+        patch: 4
     },
     toString: function() { return TFLEnhanced.version.major + '.' + TFLEnhanced.version.minor + '.' + TFLEnhanced.version.patch},
     init: function(){
@@ -60,6 +60,9 @@ TFLEnhancedModel = require('app/base/Class').extend({
         Lang.ui.buttonDJQuit = "http://i.imgur.com/i4YkTFC.png";
         Lang.ui.buttonDJPlayShort = "http://i.imgur.com/SqU01C6.png";
         Lang.rollover.host = "The Boss"
+        Lang.messages.modKick ="Bass Cannoned %NAME% To The Sun."
+        Lang.dialog.kickUserPrompt = "Are you sure you want to Bass Cannon %NAME% to the sun for 60 minutes? You can optionally provide a reason to show to them."
+        Lang.rollover.modKick = "Bass Cannon To Sun"
         Lang.chat.help = "<strong>Chat Commands:</strong><br/>/em &nbsp; <em>Emote</em><br/>/me &nbsp; <em>Emote</em><br/>/clear &nbsp; <em>Clear Chat History</em><br/>/cap # &nbsp; <em>Limits the number of avatars rendered (1-200)</em><br/>/ts # &nbsp; <em>Chat timestamps (12, 24, 0)</em><br />/emoji on (or off) <em>Enable/disable Emojis</em><br /> /strobe on/off &nbsp; <em>Strobe light on/off</em><br /> /rave on/off &nbsp; <em>Lights out on/off</em><br />/close &nbsp; <em>Remove TFL Enhanced script</em> <br /> /Avatar # &nbsp; <em> change Halloween Avatars ( # = 1-13)</em> <br /> /Auto On &nbsp; <em> plugbot load </em>"
         $('#button-vote-negative').hide();
         $('#button-chat-popout').click(function(){setTimeout(function(){TFLEnhanced.initPopout()},500)});
@@ -140,6 +143,9 @@ TFLEnhancedModel = require('app/base/Class').extend({
         Lang.rollover.fans = "fans"
         Lang.rollover.host = "Host"
         Lang.alerts.updateMesage ="plug.dj has been updated and requires a refresh. Click OK to refresh the page."
+        Lang.messages.modKick ="kicked %NAME% out of the room."
+        Lang.dialog.kickUserPrompt = "Are you sure you want to kick %NAME% from the room for 60 minutes? You can optionally provide a reason to show to them."
+        Lang.rollover.modKick = "Kick From Room"
         Lang.chat.help = "<strong>Chat Commands:</strong><br/>/em &nbsp; <em>Emote</em><br/>/me &nbsp; <em>Emote</em><br/>/clear &nbsp; <em>Clear Chat History</em><br/>/cap # &nbsp; <em>Limits the number of avatars rendered (1-200)</em><br/>/ts # &nbsp; <em>Chat timestamps (12, 24, 0)</em><br/>/emoji on (or off) <em>Enable/disable Emojis</em>"        
         API.off(API.CHAT,this.proxy.onChat)
         API.off(API.CHAT_COMMAND,this.customChatCommand)
