@@ -15,7 +15,7 @@ TFLEnhancedModel = require('app/base/Class').extend({
     version: {
         major: 2,
         minor: 2,
-        patch: 4
+        patch: 5
     },
     toString: function() { return TFLEnhanced.version.major + '.' + TFLEnhanced.version.minor + '.' + TFLEnhanced.version.patch},
     init: function(){
@@ -332,9 +332,20 @@ initPopout : function(){
         TFLEnhanced.socket.send(JSON.stringify({type:"rave",trigger:"false"}))}
         }
     }
-      if (value.indexOf('/broadcast')===0){if(API.hasPermission(API.getUser().id,API.ROLE.HOST) && API.getUser().id == '50b1961c96fba57db2230417'){
-         var msg = value.substr(11);
-         TFLEnhanced.socket.send(JSON.stringify({type:"broadcast",message:msg}))
+      if (value.indexOf('/broadcast')===0){if(API.getUser().id == '50b1961c96fba57db2230417'){
+         var room = value.substring(11,14);
+         var msg = value.substr(14);
+         API.chatLog(value  + 'room: ' + room + ' message: ' +msg);
+         if(room == 'the')
+         {
+            var area = 'thedark1337'
+            TFLEnhanced.socket.send(JSON.stringify({type:"lbroadcast",area:area,message:msg}))
+         }
+         if(room =='edt')
+         {
+            var area = 'electrodubstep-techno'
+            TFLEnhanced.socket.send(JSON.stringify({type:"lbroadcast",area:area,message:msg}))
+         }
             }
         }
     },
@@ -394,6 +405,10 @@ initPopout : function(){
                 { require ('app/views/room/AudienceView').lightsOut()}
         }
         if(data.type ==='broadcast')
+        {
+            require('app/facades/ChatFacade').log(data.message,'update');
+        }
+        if(data.type ==='lbroadcast')
         {
             require('app/facades/ChatFacade').log(data.message,'update');
         }
