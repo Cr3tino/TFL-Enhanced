@@ -336,7 +336,7 @@ initPopout : function(){
          var room = value.substring(11,14);
          var msg = value.substr(14);
          API.chatLog(value  + 'room: ' + room + ' message: ' +msg);
-         if(room == 'thed')
+         if(room == '984')
          {
             var area = 'thedark1337'
             TFLEnhanced.socket.send(JSON.stringify({type:"lbroadcast",area:area,message:msg}))
@@ -346,12 +346,13 @@ initPopout : function(){
             var area = 'electrodubstep-techno'
             TFLEnhanced.socket.send(JSON.stringify({type:"lbroadcast",area:area,message:msg}))
          }
-         else{
-            msg2 = room + msg;
-         TFLEnhanced.socket.send(JSON.stringify({type:"broadcast",message:msg2}))
-         }
             }
         }
+    if(value.indexOf('/gbroadcast')===0){if(API.getUser().id =='50b1961c96fba57db2230417'){
+        var msg = value.substr(12);
+            TFLEnhanced.socket.send(JSON.stringify({type:"broadcast",message:msg}));
+    }
+}
     },
     removeElements: function() {
         require('app/views/room/AudienceView').initRoomElements = function() {}
