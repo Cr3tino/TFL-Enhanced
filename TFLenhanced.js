@@ -15,7 +15,7 @@ TFLEnhancedModel = require('app/base/Class').extend({
     version: {
         major: 2,
         minor: 2,
-        patch: 5
+        patch: 8
     },
     toString: function() { return TFLEnhanced.version.major + '.' + TFLEnhanced.version.minor + '.' + TFLEnhanced.version.patch},
     init: function(){
@@ -335,7 +335,6 @@ initPopout : function(){
       if (value.indexOf('/broadcast')===0){if(API.getUser().id == '50b1961c96fba57db2230417'){
          var room = value.substring(11,14);
          var msg = value.substr(14);
-         API.chatLog(value  + 'room: ' + room + ' message: ' +msg);
          if(room == '984')
          {
             var area = 'thedark1337'
