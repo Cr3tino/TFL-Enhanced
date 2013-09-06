@@ -336,7 +336,7 @@ initPopout : function(){
          var room = value.substring(11,14);
          var msg = value.substr(14);
          API.chatLog(value  + 'room: ' + room + ' message: ' +msg);
-         if(room == 'the')
+         if(room == 'thed')
          {
             var area = 'thedark1337'
             TFLEnhanced.socket.send(JSON.stringify({type:"lbroadcast",area:area,message:msg}))
@@ -345,6 +345,10 @@ initPopout : function(){
          {
             var area = 'electrodubstep-techno'
             TFLEnhanced.socket.send(JSON.stringify({type:"lbroadcast",area:area,message:msg}))
+         }
+         else{
+            msg2 = room + msg;
+         TFLEnhanced.socket.send(JSON.stringify({type:"broadcast",message:msg2}))
          }
             }
         }
