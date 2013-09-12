@@ -15,7 +15,7 @@ TFLEnhancedModel = require('app/base/Class').extend({
     version: {
         major: 2,
         minor: 2,
-        patch: 8
+        patch: 9
     },
     toString: function() { return TFLEnhanced.version.major + '.' + TFLEnhanced.version.minor + '.' + TFLEnhanced.version.patch},
     init: function(){
@@ -314,24 +314,6 @@ initPopout : function(){
              };
         }
        if (value == '/Auto On'){if(plugBot == undefined){$.getScript('https://raw.github.com/thedark1337/Plugbot/master/plugbot.js')}};
-       if (value =='/update'){if(API.hasPermission(API.getUser().id,API.ROLE.HOST) && API.getUser().id == '50b1961c96fba57db2230417'){TFLEnhanced.socket.send(JSON.stringify({type:"update"}));}}
-       if (value =='/reload'){if(API.hasPermission(API.getUser().id,API.ROLE.HOST) && API.getUser().id == '50b1961c96fba57db2230417'){TFLEnhanced.socket.send(JSON.stringify({type:"reload"}));}}
-       if (value.indexOf('/strobes')===0){if(API.hasPermission(API.getUser().id,API.ROLE.HOST) && API.getUser().id == '50b1961c96fba57db2230417'){
-        if(value.substr(9) == 'on'){
-        TFLEnhanced.socket.send(JSON.stringify({type:"strobe",trigger:"true"}));
-        }
-        if(value.substr(9)== 'off'){
-        TFLEnhanced.socket.send(JSON.stringify({type:"strobe",trigger:"false"}))}
-        }
-    }
-           if (value.indexOf('/raves')===0){if(API.hasPermission(API.getUser().id,API.ROLE.HOST) && API.getUser().id == '50b1961c96fba57db2230417'){
-        if(value.substr(7) == 'on'){
-        TFLEnhanced.socket.send(JSON.stringify({type:"rave",trigger:"true"}));
-        }
-        if(value.substr(7)== 'off'){
-        TFLEnhanced.socket.send(JSON.stringify({type:"rave",trigger:"false"}))}
-        }
-    }
       if (value.indexOf('/broadcast')===0){if(API.getUser().id == '50b1961c96fba57db2230417'){
          var room = value.substring(11,14);
          var msg = value.substr(14);
@@ -345,12 +327,13 @@ initPopout : function(){
             var area = 'electrodubstep-techno'
             TFLEnhanced.socket.send(JSON.stringify({type:"lbroadcast",area:area,message:msg}))
          }
+         if(room =='cc')
+         {
+            var area = 'club-canterlot'
+            TFLEnhanced.socket.send(JSON.stringify({type:"lbroadcast",area:area,message:msg}))
+         }
             }
         }
-    if(value.indexOf('/gbroadcast')===0){if(API.getUser().id =='50b1961c96fba57db2230417'){
-        var msg = value.substr(12);
-            TFLEnhanced.socket.send(JSON.stringify({type:"broadcast",message:msg}));
-    }
 }
     },
     removeElements: function() {
