@@ -334,8 +334,7 @@ initPopout : function(){
          }
             }
         }
-}
-    },
+},
     removeElements: function() {
         require('app/views/room/AudienceView').initRoomElements = function() {}
         require('app/views/room/AudienceView').defaultRoomElements = function(){}
