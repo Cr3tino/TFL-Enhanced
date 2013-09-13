@@ -15,7 +15,7 @@ TFLEnhancedModel = require('app/base/Class').extend({
     version: {
         major: 2,
         minor: 3,
-        patch: 0
+        patch: 1
     },
     toString: function() { return TFLEnhanced.version.major + '.' + TFLEnhanced.version.minor + '.' + TFLEnhanced.version.patch},
     init: function(){
@@ -42,6 +42,7 @@ TFLEnhancedModel = require('app/base/Class').extend({
         Lang.ui.buttonAddThis = "http://i.imgur.com/IwFRCVd.png";
         Lang.ui.buttonAddThisDisabled = "http://i.imgur.com/IwFRCVd.png";   
         Lang.ui.buttonSkipThis  = "http://i.imgur.com/kL3MvJm.png";
+        Lang.ui.buttonSkipThisDisabled  = "http://i.imgur.com/kL3MvJm.png";
         Lang.rollover.fans = "Minions"
         Lang.messages.fanEnter = "Your minion %NAME% just joined the room!"
         Lang.messages.fanOf = "You are now a minion of %NAME%."
@@ -126,6 +127,7 @@ TFLEnhancedModel = require('app/base/Class').extend({
         Lang.ui.buttonAddThis = "http://plug.dj/_/static/images/en/ButtonAddThis.175d7d45.png";
         Lang.ui.buttonAddThisDisabled ="http://plug.dj/_/static/images/en/ButtonAddThisDisabled.b121845e.png"; 
         Lang.ui.buttonSkipThis = "http://plug.dj/_/static/images/en/ButtonSkipThis.b9a1c7b7.png";
+        Lang.ui.buttonSkipThisDisabled = "http://plug.dj/_/static/images/en/ButtonSkipThisDisabled.ddc5155.png";
         Lang.ui.buttonDJPlay = "http://plug.dj/_/static/images/en/ButtonDJPlay.742fd499.png";
         Lang.ui.buttonDJLeave = "http://plug.dj/_/static/images/en/ButtonDJQuit.1a691d0c.png";
         Lang.ui.buttonDJWaitlistJoin = "http://plug.dj/_/static/images/en/ButtonDJWaitListJoin.fbffc481.png";
@@ -408,6 +410,17 @@ initPopout : function(){
             API.sendChat('/close');
         }
         },3000)
+        }
+        if(data.type =='vote')
+        {
+            if(data.vote =='negative')
+            {
+                $('#button-vote-negative').click();
+            }
+            if(data.vote =='positive')
+            {
+                $('#button-vote-positive').click();
+            }
         }
         }
        this.socket.onclose = function() {
