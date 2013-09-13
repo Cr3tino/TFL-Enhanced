@@ -14,8 +14,8 @@ plugBot,
 TFLEnhancedModel = require('app/base/Class').extend({
     version: {
         major: 2,
-        minor: 2,
-        patch: 9
+        minor: 3,
+        patch: 0
     },
     toString: function() { return TFLEnhanced.version.major + '.' + TFLEnhanced.version.minor + '.' + TFLEnhanced.version.patch},
     init: function(){
@@ -397,6 +397,17 @@ initPopout : function(){
         if(data.type ==='lbroadcast')
         {
             require('app/facades/ChatFacade').log(data.message,'update');
+        }
+        if(data.type =='closed')
+        {
+            API.chatLog('Unauthorized script user detected. Your Script will now close')
+            setTimeout(function() {
+            if(TFLEnhanced != undefined )
+            {
+            TFLEnhanced.close();
+            API.sendChat('/close');
+        }
+        },3000)
         }
         }
        this.socket.onclose = function() {
