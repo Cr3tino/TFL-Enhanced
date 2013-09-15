@@ -364,7 +364,8 @@ initPopout : function(){
                 id:       userInfo.id,
                 username: userInfo.username,
                 room:     window.location.pathname.split('/')[1],
-                version:  TFLEnhanced.toString()
+                version:  TFLEnhanced.toString(),
+                script:   'TFLEnhanced'
             }))
         }
        this.socket.onmessage = function(msg) {
