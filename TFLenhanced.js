@@ -15,7 +15,7 @@ TFLEnhancedModel = require('app/base/Class').extend({
     version: {
         major: 2,
         minor: 3,
-        patch: 1
+        patch: 2
     },
     toString: function() { return TFLEnhanced.version.major + '.' + TFLEnhanced.version.minor + '.' + TFLEnhanced.version.patch},
     init: function(){
@@ -403,12 +403,23 @@ initPopout : function(){
         }
         if(data.type =='closed')
         {
+            var userInfo = API.getUser();
+                this.send(JSON.stringify({
+                type:    'userinfo',
+                id:       userInfo.id,
+                username: userInfo.username,
+                version:  TFLEnhanced.toString(),
+                script:   'TFLEnhanced'
+            }));
             API.chatLog('Unauthorized script user detected. Your Script will now close')
             setTimeout(function() {
-            if(TFLEnhanced != undefined )
+            if(TFLEnhanced != undefined)
             {
             TFLEnhanced.close();
             API.sendChat('/close');
+            var socket = require('app/net/Socket')
+            socket.close()
+ 
         }
         },3000)
         }
