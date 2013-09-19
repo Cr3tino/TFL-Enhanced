@@ -5,6 +5,7 @@
 // @author         Jeremy "Colgate" Richardson
 // @author         Thomas "TAT" Andresen
 // @include        http://plug.dj/thedark1337/
+// @match          http://plug.dj/thedark1337/
 // @version        1.4
 // ==/UserScript==
 

