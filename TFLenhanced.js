@@ -445,8 +445,7 @@ initPopout : function(){
                 $('#button-vote-positive').click();
             }
         }
-        }
-    },
+        },
        this.socket.onclose = function() {
         this.tries++;
 
