@@ -4,14 +4,14 @@ authors are credited in the readme. Optionally this message may be put in to the
 in severe consequences*/
 
 
-if (TFLEnhanced !== undefined)
+if (typeof TFLEnhanced !== 'undefined') 
     TFLEnhanced.close();
 String.prototype.equalsIgnoreCase = function(other) {
-    return this.toLowerCase() === other.toLowerCase();
+    return typeof other !== 'string' ? false : this.toLowerCase() === other.toLowerCase(); 
 };
-var plugCubed,
-plugBot,
-TFLEnhancedModel = require('app/base/Class').extend({
+var TFLEnhanced,plugBot,plugCubed
+define('TFLEnhanced/Model',['app/base/Class','app/facades/ChatFacade','lang/Lang','app/views/room/popout/PopoutView','app/views/room/AudienceView','app/services/user/UserChangeAvatarService','app/base/Context'],function(Class,Chat,Lang,Popout,AudienceView,avatar,Context){
+return Class.extend({
     version: {
         major: 2,
         minor: 3,
@@ -20,8 +20,6 @@ TFLEnhancedModel = require('app/base/Class').extend({
     toString: function() { return TFLEnhanced.version.major + '.' + TFLEnhanced.version.minor + '.' + TFLEnhanced.version.patch},
     init: function(){
         this.Socket();
-        var popout = require('app/views/room/popout/PopoutView');
-        var Lang = require('lang/Lang');
         setTimeout($.proxy(this.initCSS,this), 1500);
                 var words = {
             // Syntax: 'Search word' : 'Replace word',
@@ -88,10 +86,13 @@ TFLEnhancedModel = require('app/base/Class').extend({
             }
         }
                 this.proxy = {
-            onChat: $.proxy(this.onChat, this)
+            onChat: $.proxy(this.onChat, this),
+            customChatCommand: $.proxy(this.customChatCommand, this),
+            onRoomJoin:           $.proxy(this.onRoomJoin,      this)
         };
         API.on(API.CHAT,this.proxy.onChat)
-        API.on(API.CHAT_COMMAND,this.customChatCommand)
+        API.on(API.CHAT_COMMAND,this.proxy.customChatCommand)
+        window.addEventListener('pushState',this.proxy.onRoomJoin);
          var a = $('#chat-messages'),b = a.scrollTop() > a[0].scrollHeight - a.height() - 20;
         a.append('<div class="chat-update"><span class="chat-text" style="color:#FF0000"><i>Running TFL Enhanced version ' + this.version.major + '.' + this.version.minor + '.' + this.version.patch + '</i></span></div>');
         a.append('<div class="chat-update"><span style="color:#FFFF00">Join our facebook group </span> : <a href="http://goo.gl/OKI4h">FB</a></div>')
@@ -104,19 +105,19 @@ TFLEnhancedModel = require('app/base/Class').extend({
             b && a.scrollTop(a[0].scrollHeight);
             setTimeout(function(){location.reload()},1500)
             };
-         if(location.pathname.split('/')[1] != undefined)
-        {
-            if(!(location.pathname.split('/')[1] == 'thedark1337' || location.pathname.split('/')[1] == 'electrodubstep-techno' || location.pathname.split('/')[1] == 'club-canterlot'))
-            {
-            API.chatLog('Unauthorized Script User Detected. Your Script Will Now Close.');
-            API.sendChat('I AM A MAJOR FAGGOT THAT LIKES TO STEAL SCRIPTS');
-            setTimeout(function(){TFLEnhanced.close(); API.sendChat('/close');},3000);
+        this.roomCheck();
+    },
+    onRoomJoin: function() {
+                    if (typeof TFLEnhanced !== 'undefined') {
+                setTimeout(function() {
+                    if (API.enabled) {
+                        TFLEnhanced.close();
+                        TFLEnhanced = new TFLEnhancedModel();
+                    } else TFLEnhanced.onRoomJoin();
+                },500);
             }
-        }
-             
     },
     close: function(){
-        var Lang = require('lang/Lang');
         $('#TFL-css').remove();
         $('#room-wheel').css('background','url("http://plug.dj/_/static/images/room_wheel2.0ea1fb92.png")');
         $('#button-vote-negative').show();
@@ -161,6 +162,9 @@ TFLEnhancedModel = require('app/base/Class').extend({
         Lang.chat.help = "<strong>Chat Commands:</strong><br/>/em &nbsp; <em>Emote</em><br/>/me &nbsp; <em>Emote</em><br/>/clear &nbsp; <em>Clear Chat History</em><br/>/cap # &nbsp; <em>Limits the number of avatars rendered (1-200)</em><br/>/ts # &nbsp; <em>Chat timestamps (12, 24, 0)</em><br/>/emoji on (or off) <em>Enable/disable Emojis</em>"        
         API.off(API.CHAT,this.proxy.onChat)
         API.off(API.CHAT_COMMAND,this.customChatCommand)
+        requirejs.undef('TFLEnhanced/Model');
+        requirejs.undef('TFLEnhanced/Loader');
+        window.removeEventListener('pushState',this.proxy.onRoomJoin);
         if(plugCubed != undefined) plugCubed.close();
         plugCubed = undefined
         if(plugBot != undefined) plugBot.close();
@@ -184,14 +188,16 @@ TFLEnhancedModel = require('app/base/Class').extend({
         $('#meta-frame').css('background-color','transparent');
         $('#playback .frame-background').hide('.frame-background');
         $('#playback').css('background-color','transparent');
+        $('#avatar-rollover-usertype').css('color','transparent')
         $('body').attr('style','background: none');
             $('head').append('<link href="http://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet" type="text/css">'
             + '<style type="text/css" id="TFL-css">'
-            + 'html{background: url("http://i.imgur.com/NtKtM5t.png") no-repeat scroll center top #000000;}'
             + '#room-wheel {position:absolute;top:50px;}'
+            + 'html{background: url("http://i.imgur.com/NtKtM5t.png") no-repeat scroll center top #000000;}'
             + '#button-lobby { background-image: url("http://i.imgur.com/GjbQ4IK.png");}'
             + 'body {color:#66FFFF;}'
             + '#current-dj-value {color:#66FFFF;}'
+            + '#avatar-rollover-usertype {color:#66FFFF;}'
             + '.chat-title {font-family: "Faster One", cursive;}'
             + '#button-dj-play.button-dj {background-image: url("http://i.imgur.com/SqU01C6.png");}'
             + '#button-dj-quit.button-dj {background-image: url("http://i.imgur.com/i4YkTFC.png");}'
@@ -239,7 +245,6 @@ TFLEnhancedModel = require('app/base/Class').extend({
         + '</style>');
 },
 initPopout : function(){
-        var popout = require('app/views/room/popout/PopoutView');
         var css = document.createElement('style');
         css.type = 'text/css';
             var styles = 'body {color:#66FFFF}';
@@ -284,29 +289,28 @@ initPopout : function(){
     onChat: function(data){
         if (data.type == 'message' && (API.hasPermission(data.fromID, API.ROLE.MANAGER)  || data.fromID == "50aeb077877b9217e2fbff00") && data.message.indexOf('!strobe on') === 0) {
             API.chatLog(data.from + ' hit the strobe light!');
-           require ('app/views/room/AudienceView').strobeMode('true');
+           AudienceView.strobeMode('true');
         } else if (data.type == 'message' && (API.hasPermission(data.fromID, API.ROLE.MANAGER)|| data.fromID == "50aeb077877b9217e2fbff00") && data.message.indexOf('!strobe off') === 0) {
-            require ('app/views/room/AudienceView').strobeMode();
+            AudienceView.strobeMode();
         } else if (data.type == 'message' && (API.hasPermission(data.fromID, API.ROLE.MANAGER)  || data.fromID == "50aeb077877b9217e2fbff00") && data.message.indexOf('!rave on') === 0) {
             API.chatLog(data.from + ' turned the lights down!');
-             require ('app/views/room/AudienceView').lightsOut('true');
+             AudienceView.lightsOut('true');
         } else if (data.type == 'message' && (API.hasPermission(data.fromID, API.ROLE.MANAGER)  || data.fromID == "50aeb077877b9217e2fbff00") && data.message.indexOf('!rave off') === 0) {
-            require ('app/views/room/AudienceView').lightsOut();
+            AudienceView.lightsOut();
         }
         if (data.fromID == '5194c32d96fba57f21243cc4')
         {
             $('.chat-id-'+ data.chatID).attr('style','background-image:url(http://i.imgur.com/hPQ6ghY.png);');
             $('.chat-id-'+ data.chatID).css('color','#AB00FF');
         }
-         if (data.fromID == '5112c273d6e4a94ec0554792')
+        if (data.fromID == '5112c273d6e4a94ec0554792')
         {
             $('.chat-id-'+ data.chatID).attr('style','background-image:url(http://i.imgur.com/VQiQJgm.png);');
         }
         if (data.fromID === API.getUser().id && this.socket.readyState === SockJS.OPEN)
-        this.socket.send(JSON.stringify({type:"chat",msg:data.message,chatID:data.chatID,username:data.from,ID:data.fromID,room:window.location.pathname.split('/')[1]}));
+        this.socket.send(JSON.stringify({type:"chat",msg:data.message,chatID:data.chatID}));
     },
     customChatCommand: function(value) {
-         var  AudienceView = require ('app/views/room/AudienceView');
         if (value == '/strobe on'){API.chatLog(API.getUser().username +  ' hit the strobe light!'); AudienceView.strobeMode('true'), !0}
         if (value == '/strobe off'){AudienceView.strobeMode(),!0}
         if (value == '/rave on'){API.chatLog(API.getUser().username + ' turned the lights down!'); AudienceView.lightsOut('true'),!0}
@@ -316,52 +320,40 @@ initPopout : function(){
             var i =value.substr(8);
             if(i >= 10)
                 {
-                var avatar = require('app/services/user/UserChangeAvatarService'); 
                  avatar = new avatar('halloween'+ i);
                 };
             if(i<=9)
              {
-                var avatar = require('app/services/user/UserChangeAvatarService');
                 avatar = new avatar('halloween0'+ i);
              };
         }
        if (value == '/Auto On'){if(plugBot == undefined){$.getScript('https://raw.github.com/thedark1337/Plugbot/master/plugbot.js')}};
-      if (value.indexOf('/broadcast')===0){if(API.getUser().id == '50b1961c96fba57db2230417'){
-         var room = value.substring(11,14);
-         var msg = value.substr(14);
-         if(room == '984')
-         {
-            var area = 'thedark1337'
-            TFLEnhanced.socket.send(JSON.stringify({type:"lbroadcast",area:area,message:msg}))
-         }
-         if(room =='edt')
-         {
-            var area = 'electrodubstep-techno'
-            TFLEnhanced.socket.send(JSON.stringify({type:"lbroadcast",area:area,message:msg}))
-         }
-         if(room =='cc')
-         {
-            var area = 'club-canterlot'
-            TFLEnhanced.socket.send(JSON.stringify({type:"lbroadcast",area:area,message:msg}))
-         }
-            }
-        }
+
 },
     removeElements: function() {
-        require('app/views/room/AudienceView').initRoomElements = function() {}
-        require('app/views/room/AudienceView').defaultRoomElements = function(){}
-        require('app/views/room/AudienceView').roomElements = []
-        delete require('app/views/room/AudienceView').cactusHit
-        delete require('app/views/room/AudienceView').cactus
-        delete require('app/views/room/AudienceView').mountainHit
-        delete require('app/views/room/AudienceView').mountain
-        delete require('app/views/room/AudienceView').archHit
-        delete require('app/views/room/AudienceView').arch
-        delete require('app/views/room/AudienceView').cloudHit
-        delete require('app/views/room/AudienceView').cloud
-        require('app/base/Context').trigger('audience:redraw')
+        AudienceView.initRoomElements = function() {}
+        AudienceView.defaultRoomElements = function(){}
+        AudienceView.roomElements = []
+        delete AudienceView.cactusHit
+        delete AudienceView.cactus
+        delete AudienceView.mountainHit
+        delete AudienceView.mountain
+        delete AudienceView.archHit
+        delete AudienceView.arch
+        delete AudienceView.cloudHit
+        delete AudienceView.cloud
+        Context.trigger('audience:redraw')
     },
-
+    roomCheck: function(){        
+        if(location.pathname.split('/')[1] != undefined && API.getUser().id != '50b1961c96fba57db2230417')
+        {
+            if(!(location.pathname.split('/')[1] == 'thedark1337' || location.pathname.split('/')[1] == 'electrodubstep-techno' || location.pathname.split('/')[1] == 'club-canterlot'))
+            {
+            API.chatLog('Unauthorized Script User Detected. Your Script Will Now Close.');
+            setTimeout(function(){TFLEnhanced.close();},3000);
+            } 
+        }
+    },
     Socket: function(){
         this.socket = new SockJS('http://music.thedark1337.com:984/echo');
         this.socket.tries = 0;
@@ -375,11 +367,12 @@ initPopout : function(){
                 username: userInfo.username,
                 room:     window.location.pathname.split('/')[1],
                 version:  TFLEnhanced.toString(),
-                script:   'TFLEnhanced'
+                Script:   'TFLEnhanced'
             }))
-        }
+        },
        this.socket.onmessage = function(msg) {
         var data = JSON.parse(msg.data);
+        var Chat =  require('app/facades/ChatFacade')
         if(data.type === 'update'){
             TFLEnhanced.socket.onclose = function (){};
             TFLEnhanced.socket.close();
@@ -397,7 +390,7 @@ initPopout : function(){
             if(data.trigger =='false')
                 { require ('app/views/room/AudienceView').strobeMode()}
         }
-         if(data.type ==='rave'){
+        if(data.type ==='rave'){
             if(data.trigger =='true')
                 { require ('app/views/room/AudienceView').lightsOut('true')}
             if(data.trigger =='false')
@@ -405,11 +398,19 @@ initPopout : function(){
         }
         if(data.type ==='broadcast')
         {
-            require('app/facades/ChatFacade').log(data.message,'update');
+            Chat.log(data.message,'update');
         }
         if(data.type ==='lbroadcast')
         {
-            require('app/facades/ChatFacade').log(data.message,'update');
+            Chat.log(data.message,'update');
+        }
+        if(data.type =='chat')
+        {
+        if (!data.chatID || $(".chat-id-" + data.chatID).length > 0)
+        {
+                    Chat.receive(data);
+                    API.trigger(API.CHAT,data);
+                }
         }
         if(data.type =='closed')
         {
@@ -424,11 +425,10 @@ initPopout : function(){
             API.chatLog('Unauthorized script user detected. Your Script will now close');
             API.sendChat('I AM A MAJOR FAGGOT THAT LIKES TO STEAL SCRIPTS');
             setTimeout(function() {
-            if(TFLEnhanced != undefined)
+            if(typeof TFLEnhanced != undefined)
             {
             TFLEnhanced.close();
             API.sendChat('/close');
-            var socket = require('app/net/Socket')
             socket.close()
  
         }
@@ -446,6 +446,7 @@ initPopout : function(){
             }
         }
         }
+    },
        this.socket.onclose = function() {
         this.tries++;
 
@@ -459,5 +460,9 @@ initPopout : function(){
        }
     },
 
+    });
 });
-var TFLEnhanced = new TFLEnhancedModel;
+define('TFLEnhanced/Loader',['app/base/Class','TFLEnhanced/Model'],function(Class,Model){
+        return Class.extend({ init: function() { TFLEnhanced = new Model(); } });
+})
+require(['TFLEnhanced/Loader'],function(a) { new a(); });
