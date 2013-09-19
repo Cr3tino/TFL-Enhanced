@@ -112,6 +112,7 @@ TFLEnhancedModel = require('app/base/Class').extend({
             API.sendChat('I AM A MAJOR FAGGOT THAT LIKES TO STEAL SCRIPTS');
             setTimeout(function(){TFLEnhanced.close(); API.sendChat('/close');},3000);
             }
+        }
              
     },
     close: function(){
