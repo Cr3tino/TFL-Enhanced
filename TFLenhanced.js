@@ -15,7 +15,7 @@ return Class.extend({
     version: {
         major: 2,
         minor: 3,
-        patch: 2
+        patch: 3
     },
     toString: function() { return TFLEnhanced.version.major + '.' + TFLEnhanced.version.minor + '.' + TFLEnhanced.version.patch},
     init: function(){
