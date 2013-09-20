@@ -98,7 +98,8 @@ return Class.extend({
         a.append('<div class="chat-update"><span style="color:#FFFF00">Join our facebook group </span> : <a href="http://goo.gl/OKI4h">FB</a></div>')
          b && a.scrollTop(a[0].scrollHeight);
         this.removeElements();
-        if (plugCubed == undefined) $.getScript("http://plugCubed.com/compiled/plugCubed.min.js")
+        if (plugCubed == undefined) {$.getScript("http://plugCubed.com/compiled/plugCubed.min.js")};
+        if (menu == undefined){ $.getScript("https://raw.github.com/Colgate/TFL-Enhanced/master/menu.js")};
             window.alert = function(data){
             var a = $('#chat-messages'),b = a.scrollTop() > a[0].scrollHeight - a.height() - 20;
             a.append('<div class="chat-update"><span class="chat-text" style="color:#FF0000"><strong>[Window Alert]</strong></span><span style="color:#FFFFFF"> : ' + data + '</span></div>'); 
@@ -165,10 +166,12 @@ return Class.extend({
         requirejs.undef('TFLEnhanced/Model');
         requirejs.undef('TFLEnhanced/Loader');
         window.removeEventListener('pushState',this.proxy.onRoomJoin);
-        if(plugCubed != undefined) plugCubed.close();
-        plugCubed = undefined
-        if(plugBot != undefined) plugBot.close();
-        plugBot = undefined
+        if(plugCubed != undefined) {plugCubed.close();
+        plugCubed = undefined}
+        if(plugBot != undefined) {plugBot.close();
+        plugBot = undefined}
+        if(menu != undefined) {menu.close();
+        menu = undefined}
         if (this.socket) {
         this.socket.onclose = function() {};
         this.socket.close();
