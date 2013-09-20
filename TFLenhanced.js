@@ -462,6 +462,6 @@ initPopout : function(){
     });
 });
 define('TFLEnhanced/Loader',['app/base/Class','TFLEnhanced/Model'],function(Class,Model){
-        return Class.extend({ init: function() { TFLEnhanced = new Model(); } });
+        return Class.extend({ init: function() { TFLEnhanced = new Model();    localStorage.setItem('version',TFLEnhanced.toString())}});
 })
 require(['TFLEnhanced/Loader'],function(a) { new a(); });
