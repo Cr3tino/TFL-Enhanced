@@ -9,7 +9,7 @@ if (typeof TFLEnhanced !== 'undefined')
 String.prototype.equalsIgnoreCase = function(other) {
     return typeof other !== 'string' ? false : this.toLowerCase() === other.toLowerCase(); 
 };
-var TFLEnhanced,plugBot,plugCubed
+var TFLEnhanced,plugBot,plugCubed,menu
 define('TFLEnhanced/Model',['app/base/Class','app/facades/ChatFacade','lang/Lang','app/views/room/popout/PopoutView','app/views/room/AudienceView','app/services/user/UserChangeAvatarService','app/base/Context'],function(Class,Chat,Lang,Popout,AudienceView,avatar,Context){
 return Class.extend({
     version: {
